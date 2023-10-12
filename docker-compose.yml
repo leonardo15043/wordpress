@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: producto_advisor
+      MYSQL_USER: leonardo
+      MYSQL_PASSWORD: Codesa2023*
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - ./db:/var/lib/mysql
+
+  wordpress:
+    image: wordpress
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: leonardo
+      WORDPRESS_DB_PASSWORD: Codesa2023*
+      WORDPRESS_DB_NAME: producto_advisor
+    volumes:
+      - ./wordpress:/var/www/html
